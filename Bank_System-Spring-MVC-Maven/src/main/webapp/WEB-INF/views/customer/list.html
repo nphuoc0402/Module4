@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
+
+    <style>
+        label.error {
+            color: red;
+        }
+    </style>
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/resource/js/jquery.validate.min.js"></script>
+
+</head>
+<body>
+<center>
+    <h1>Customer Management</h1>
+</center>
+
+<div class="container">
+    <a href="/create-customer">Create new customer</a>
+    <div align="center">
+        <caption><h2>List of Customers</h2></caption>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Email</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Deposit</th>
+            <th scope="col">Withdraw</th>
+            <th scope="col">Actions</th>
+            </thead>
+            <th:block th:each="customer : ${customers}">
+                <tr>
+                    <td th:text="${customer.id}"></td>
+                    <td th:text="${customer.name}"></td>
+                    <td th:text="${customer.phone}"></td>
+                    <td th:text="${customer.email}"></td>
+                    <td class="text-right"><span
+                            th:text="${#numbers.formatDecimal(customer.getSalary(), 0, 'COMMA', 2, 'POINT')}">10.00</span>
+                        $
+                    </td>
+                    <td>
+                        <a class="btn btn-warning" th:href="@{/deposit-customer/__${customer.id}__ }" title="Edit">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-warning" th:href="@{/withdraw-customer/__${customer.id}__ }" title="Edit">
+                            <i class="fa fa-minus" aria-hidden="true"></i></a>
+                    </td>
+                    <td><a class="btn btn-warning" th:href="@{/edit-customer/__${customer.id}__ }" title="Edit"><i
+                            class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        <a class="btn btn-primary" th:href="@{/transfer-customer/__${customer.id}__ }"
+                            title="Delete">
+<!--                            th:onclick="deleteCustomer(${customer.id})"-->
+                            <i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                        <a class="btn btn-danger" th:href="@{/delete-customer/__${customer.id}__ }"
+                           th:onclick="deleteCustomer(${customer.id})" title="Delete">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+</div>
+
+<script>
+    function deleteCustomer(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                window.location.href = "/delete-customer" + id;
+            }
+        })
+    }
+</script>
+</body>
+</html>
