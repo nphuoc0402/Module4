@@ -22,6 +22,13 @@ public class Transfer {
     public Transfer() {
     }
 
+    public Transfer(Long idReceiver, int amount, int transaction_fee, int total_amount) {
+        this.idReceiver = idReceiver;
+        this.amount = amount;
+        this.transaction_fee = transaction_fee;
+        this.total_amount = total_amount;
+    }
+
     public Transfer(Long id, Long idSender, Long idReceiver, int amount, int transaction_fee, int total_amount) {
         this.id = id;
         this.idSender = idSender;

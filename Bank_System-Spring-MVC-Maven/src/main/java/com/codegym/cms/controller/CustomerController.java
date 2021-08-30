@@ -6,7 +6,6 @@ import com.codegym.cms.repository.ITransferRepository;
 import com.codegym.cms.service.customer.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -140,12 +139,10 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/transfer")
+    @PostMapping("/transfer-customer")
     public ModelAndView transfer(@ModelAttribute("transfer") Transfer transfer){
-//         customerService.transfer(transfer.getAmount(),transfer.getTransaction_fee()*transfer.getAmount()/100,transfer.getIdSender());
-//         customerService.deposit(transfer.getAmount(),transfer.getIdReceiver());
-         transferRepository.save(transfer);
-        ModelAndView modelAndView = new ModelAndView("/customer/transfer");
+        transferRepository.save(transfer);
+        ModelAndView modelAndView = new ModelAndView("/transfers/transfer");
 //        modelAndView.addObject("success", "New customer created successfully");
         return modelAndView;
     }

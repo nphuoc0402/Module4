@@ -46,12 +46,13 @@
     </p>
 </center>
 <div align="center" class="container">
-    <form class="needs-validation row" th:action="@{/transfer}" th:object="${transfer}" method="post">
+    <form class="needs-validation row" th:action="@{/transfer-customer}" th:object="${transfer}" method="post">
+<!--        <input  type="hidden" class="form-control"  name="idSender"   th:value="${customer.getId()}" >-->
         <div class="form-row">
             <div class="col-md-4 mb-3">
                 <label for="validationCustom01">ID Sender</label>
                 <input  type="hidden" class="form-control"  name="idS"  id="validationCustom01" th:field="${transfer.idSender}" >
-                <input disabled type="text" class="form-control" th:value="${customer.getId()}"  name="idSd" id="validationCustom02"   >
+                <input disabled type="text" class="form-control" th:value="${customer.getId()}"  name="idSd" id="validationCustom02">
             </div>
             <div class="col-md-4 mb-3">
                 <label >Customer Name</label>
