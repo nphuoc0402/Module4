@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class CustomerService implements ICustomerService {
     @Autowired
     private ICustomerRepository customerRepository;
@@ -20,13 +21,23 @@ public class CustomerService implements ICustomerService {
     @Override
     public Iterable<Customer> findAll() {
         return customerRepository.findAllActiveUsersNative();
-//        return customerRepository.findAll();
     }
 
     @Override
     public Optional<Customer> findById(Long id) {
 
-        return customerRepository.findByIdNativeQuery(id);
+//        return customerRepository.findByIdNativeQuery(id);
+        return customerRepository.findById(id);
+    }
+
+    @Override
+    public void increment(int salary, Long id) {
+        customerRepository.increment(salary,id);
+    }
+
+    @Override
+    public void decrease(int salary, Long id) {
+        customerRepository.decrease(salary,id);
     }
 
     @Override
@@ -40,19 +51,16 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    @Transactional
     public void deposit(int salary, Long id) {
         customerRepository.deposit(salary,id);
     }
 
     @Override
-    @Transactional
     public void withdraw(int salary, Long id) {
         customerRepository.withdraw(salary,id);
     }
 
     @Override
-    @Transactional
     public void transfer(int salary, int fee, Long id) {
         customerRepository.transfer(salary,fee,id);
     }

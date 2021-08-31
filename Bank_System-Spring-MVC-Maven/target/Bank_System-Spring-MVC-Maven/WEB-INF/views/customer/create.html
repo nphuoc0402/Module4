@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <title>Create customer</title>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <title>Title</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -35,27 +33,27 @@
         <a th:href="@{/customers}">Customer list</a>
     </p></center>
 <div class="container">
-    <form class="needs-validation row" th:action="@{/create}" th:object="${customer}" method="post">
+    <form class="needs-validation row"  th:object="${customer}" method="post">
         <div class=" form-group col-3">
             <label for="validationCustom01">User Name: </label>
-            <input type="text" th:field="*{name}" size="45" class="form-control" id="validationCustom01" required>
-            <!--           <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>-->
+            <input type="text" th:field="*{name}" size="45" class="form-control" id="validationCustom01" >
+                       <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
         </div>
         <div class="form-group col-3">
             <label>Phone:</label>
-            <input type="text" th:field="*{phone}" id="phone" size="45" class="form-control" required>
-<!--            <td th:if="${#fields.hasErrors('phone')}" th:errors="*{name}">Name Error</td>-->
+            <input type="text" th:field="*{phone}" id="phone" size="45" class="form-control" >
+            <td th:if="${#fields.hasErrors('phone')}" th:errors="*{name}">Phone Error</td>
 
         </div>
         <div class="form-group col-3">
             <label>Email:</label>
-            <input type="text" th:field="*{email}" id="email" size="45" class="form-control" required>
-<!--            <td th:if="${#fields.hasErrors('email')}" th:errors="*{name}">Name Error</td>-->
+            <input type="text" th:field="*{email}" id="email" size="45" class="form-control" >
+            <td th:if="${#fields.hasErrors('email')}" th:errors="*{name}">Email Error</td>
 
         </div>
         <div class="form-group col-3">
             <label>Salary:</label>
-            <input type="text" th:field="*{salary}" disabled value="0" class="form-control" required>
+            <input type="text" th:field="*{salary}" disabled value="0" class="form-control" >
         </div>
         <div class="form-group col-3">
             <button type="submit" class="btn btn-success">ADD NEW CUSTOMER</button>

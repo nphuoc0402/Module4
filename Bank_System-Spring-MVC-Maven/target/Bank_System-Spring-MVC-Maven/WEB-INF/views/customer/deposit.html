@@ -26,32 +26,33 @@
 <div align="center">
     <caption><h2>Form Deposit Customers</h2></caption>
     <h2></h2>
-    <form class="needs-validation form-group" th:action="@{/deposit}" th:object="${customer}" method="post">
-        <input th:type="hidden" name="id" th:field="*{id}">
+    <form class="needs-validation form-group" th:object="${customer}" method="post">
+        <input th:type="hidden" name="id" th:field="*{phone}">
+        <input th:type="hidden" name="id" th:field="*{email}">
+
         <div class="row">
             <div class="col-6">
                 <label >User Name: </label>
-                <input  type="text" th:field="*{name}" size="45" class="form-control" disabled>
-                <input  type="hidden" th:field="*{name}" size="45" class="form-control" >
+                <input  type="text" th:field="*{id}" size="45" class="form-control" disabled>
+                <input  type="hidden" th:field="*{id}" size="45" class="form-control" >
             </div>
             <div class="col-md-6">
                 <label>Phone:</label>
-                <input type="text" th:field="*{phone}"  size="45" class="form-control" disabled>
-                <input type="hidden" th:field="*{phone}" id="phone" size="45" class="form-control" >
+                <input type="text" th:field="*{name}"  size="45" class="form-control" disabled>
+                <input type="hidden" th:field="*{name}" id="phone" size="45" class="form-control" >
 
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <label>Email:</label>
-                <input type="text" th:field="*{email}" size="45" class="form-control" disabled>
-                <input type="hidden" th:field="*{email}"id="email" size="45" class="form-control" >
+                <label>Balance:</label>
+                <input type="text" th:field="*{salary}" size="45" class="form-control" disabled>
 
             </div>
             <div class="col-md-6">
                 <label>Balance</label>
-                <input type="text" th:field="*{salary}" name="salary"  size="45" class="form-control" >
-                <input type="hidden" th:name="salary" id="balance" size="45" class="form-control"/>
+                <input type="text" th:value="0" name="salary"   size="45" class="form-control num-point" >
+                <input type="hidden" th:field="*{salary}" id="balance" size="45" class="form-control"/>
             </div>
         </div>
         <div class="form-group">

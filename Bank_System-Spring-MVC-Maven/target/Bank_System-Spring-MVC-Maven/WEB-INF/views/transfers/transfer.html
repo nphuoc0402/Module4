@@ -46,7 +46,7 @@
     </p>
 </center>
 <div align="center" class="container">
-    <form class="needs-validation row" th:action="@{/transfer-customer}" th:object="${transfer}" method="post">
+    <form class="needs-validation row"  th:object="${transfer}" method="post">
 <!--        <input  type="hidden" class="form-control"  name="idSender"   th:value="${customer.getId()}" >-->
         <div class="form-row">
             <div class="col-md-4 mb-3">
@@ -86,7 +86,7 @@
             <div class="col-md-3 mb-3">
                 <label >Fee Transaction</label>
                 <input  id="Input"  type="hidden" name="feetransaction" value="" th:field="*{total_amount}" class="form-control" >
-                <input disabled type="text"  name="feepercent1" th:value="${transfer.total_amount}" class="form-control" >
+                <input disabled type="text"  name="feepercent1" th:value="${transfer.getTotal_amount()}" class="form-control" >
 
             </div>
         </div>
@@ -95,21 +95,21 @@
         </div>
     </form>
 </div>
-<!--<div class="message">-->
-<!--    <th:block th:if="${success}">-->
-<!--        <div class="alert alert-success" role="alert" style="position: fixed; bottom: 0; right: 0; left: 0">-->
-<!--            <Strong th:text="${success}"></Strong>-->
-<!--        </div>-->
-<!--    </th:block>-->
-<!--    <th:block th:if="${error}">-->
-<!--        <div class="alert alert-danger" role="alert" style="position: fixed; bottom: 0; right: 0; left: 0">-->
-<!--            <Strong th:text="${error}"></Strong>-->
-<!--            <button type="button" class="close" data-dismiss="alert" aria-label="Close" th:height="30px">-->
-<!--                <span aria-hidden="true">&times;</span>-->
-<!--            </button>-->
-<!--        </div>-->
-<!--    </th:block>-->
-<!--</div>-->
+<div class="message">
+    <th:block th:if="${success}">
+        <div class="alert alert-success" role="alert" style="position: fixed; bottom: 0; right: 0; left: 0">
+            <Strong th:text="${success}"></Strong>
+        </div>
+    </th:block>
+    <th:block th:if="${error}">
+        <div class="alert alert-danger" role="alert" style="position: fixed; bottom: 0; right: 0; left: 0">
+            <Strong th:text="${error}"></Strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" th:height="30px">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </th:block>
+</div>
 <script>
     function myFunction() {
         var x = document.getElementById("amount").value;

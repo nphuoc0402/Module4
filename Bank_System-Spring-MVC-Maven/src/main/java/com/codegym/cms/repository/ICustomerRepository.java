@@ -21,17 +21,25 @@ public interface ICustomerRepository extends PagingAndSortingRepository<Customer
     Iterable<Customer> findAllActiveUsersNative();
 
     @Modifying
-    @Query(value = "update customers  set c_salary = c_salary + ?1 where id = ?2",
+    @Query(value = "UPDATE customers  SET c_salary = c_salary + ?1 WHERE id = ?2",
             nativeQuery = true)
     void deposit(int salary,Long id);
 
     @Modifying
-    @Query(value = "update customers  set c_salary = c_salary - ?1 where id = ?2",
-            nativeQuery = true)
+    @Query(value = "UPDATE Customer AS c  SET c.salary = c.salary - ?1 WHERE c.id = ?2")
     void withdraw(int salary,Long id);
 
     @Modifying
-    @Query(value = "update customers  set c_salary = c_salary - ?1 - ?2 where id = ?2",nativeQuery = true)
+    @Query(value = "UPDATE customers  SET c_salary = c_salary - ?1 - ?2 WHERE id = ?2",nativeQuery = true)
     void transfer(int salary, int fee, Long id);
+
+    @Modifying
+    @Query(value = "UPDATE customers  SET c_salary = c_salary + ?1 WHERE id = ?2",nativeQuery = true)
+    void increment(int salary, Long id);
+
+    @Modifying
+    @Query(value = "UPDATE Customer AS c  SET c.salary = c.salary - ?1 WHERE c.id = ?2"
+    )
+    void decrease(int salary, Long id);
 
 }

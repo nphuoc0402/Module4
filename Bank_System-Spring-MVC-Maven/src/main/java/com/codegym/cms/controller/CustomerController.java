@@ -1,7 +1,9 @@
 package com.codegym.cms.controller;
 
+import com.codegym.cms.DTO.TransferDTO;
 import com.codegym.cms.model.Customer;
 import com.codegym.cms.model.Transfer;
+
 import com.codegym.cms.repository.ITransferRepository;
 import com.codegym.cms.service.customer.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,16 +31,21 @@ public class CustomerController {
         return new ModelAndView("/customer/create","customer",new Customer());
     }
 
-    @PostMapping("/create")
-    public ModelAndView create(@Validated  @ModelAttribute ("customer") Customer customer, BindingResult bindingResult){
-        if(customer == null || bindingResult.hasFieldErrors()){
-            return  new ModelAndView("/customer/create","error","New customer created fail");
-        }else{
-            customerService.save(customer);
-            ModelAndView modelAndView = new ModelAndView("/customer/create");
-            modelAndView.addObject("success", "New customer created successfully");
-
-            return modelAndView;
+    @PostMapping("/create-customer")
+    public ModelAndView create(@Validated @ModelAttribute ("customer") Customer customer, BindingResult bindingResult){
+//        new Customer().validate(customer,bindingResult);
+        try {
+            if (customer == null || bindingResult.hasFieldErrors()) {
+                return new ModelAndView("/customer/create", "error", "New customer created fail");
+            } else {
+                customerService.save(customer);
+                ModelAndView modelAndView = new ModelAndView("/customer/create");
+                modelAndView.addObject("customer",new Customer());
+                modelAndView.addObject("success", "New customer created successfully");
+                return modelAndView;
+            }
+        }catch (Exception e){
+            return new ModelAndView("/error.404");
         }
     }
 
@@ -64,12 +70,12 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/edit")
-    public ModelAndView updateCustomer(@ModelAttribute("customer") Customer customer) {
+    @PostMapping("/edit-customer/{id}")
+    public ModelAndView updateCustomer(@ModelAttribute("customer") Customer customer,@PathVariable Long id) {
         customerService.save(customer);
         ModelAndView modelAndView = new ModelAndView("/customer/edit");
         modelAndView.addObject("customer", customer);
-//        modelAndView.addObject("success", "Customer updated successfully");
+        modelAndView.addObject("success", "Customer updated successfully");
         return modelAndView;
     }
 
@@ -86,8 +92,13 @@ public class CustomerController {
 
     @PostMapping("/delete")
     public ModelAndView deleteCustomer(@ModelAttribute("customer") Customer customer) {
-        customerService.remove(customer.getId());
-        return new ModelAndView("redirect:customers") ;
+        try{
+            customerService.remove(customer.getId());
+            return new ModelAndView("redirect:customers") ;
+        }catch (Exception e){
+            return new ModelAndView("/error.404");
+        }
+
     }
 
     @GetMapping("/deposit-customer/{id}")
@@ -100,10 +111,10 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/deposit")
-    public ModelAndView deposit(@ModelAttribute("customer") Customer customer){
+    @PostMapping("/deposit-customer/{id}")
+    public ModelAndView deposit(@ModelAttribute("customer") Customer customer,@PathVariable Long id){
         customerService.deposit(customer.getSalary(),customer.getId());
-        ModelAndView modelAndView = new ModelAndView("/customer/deposit");
+        ModelAndView modelAndView = new ModelAndView("/customer/deposit","customer",customerService.findById(id));
         return modelAndView;
     }
 
@@ -117,10 +128,10 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/withdraw")
-    public ModelAndView withdraw(@ModelAttribute("customer") Customer customer){
+    @PostMapping("/withdraw-customer/{id}")
+    public ModelAndView withdraw(@ModelAttribute("customer") Customer customer,@PathVariable Long id){
         customerService.withdraw(customer.getSalary(),customer.getId());
-        ModelAndView modelAndView = new ModelAndView("/customer/deposit");
+        ModelAndView modelAndView = new ModelAndView("/customer/deposit","customer",customerService.findById(id));
         return modelAndView;
     }
 
@@ -139,13 +150,34 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/transfer-customer")
-    public ModelAndView transfer(@ModelAttribute("transfer") Transfer transfer){
-        transferRepository.save(transfer);
+    @PostMapping("/transfer-customer/{id}")
+    public ModelAndView transfer(@ModelAttribute("transfer") Transfer transfer,@PathVariable (name = "id") Long id){
+        transfer.setIdSender(id);
         ModelAndView modelAndView = new ModelAndView("/transfers/transfer");
-//        modelAndView.addObject("success", "New customer created successfully");
-        return modelAndView;
+        try{
+            int fee_transaction = transfer.getAmount() + (transfer.getAmount() * transfer.getTransaction_fee() /100);
+            transferRepository.save(transfer);
+            customerService.increment(transfer.getAmount(),transfer.getIdReceiver());
+            customerService.decrease(fee_transaction,id);
+            TransferDTO transferDTO = new TransferDTO(id,customerService.findById(id).get().getName(),
+                    transfer.getIdReceiver(),customerService.findById(transfer.getIdReceiver()).get().getName(),
+                    transfer.getAmount(),transfer.getTransaction_fee(),transfer.getTotal_amount());
+            modelAndView.addObject("transfer",transferDTO);
+        modelAndView.addObject("success", "New customer created successfully");
+            return modelAndView;
+        }catch (IllegalStateException e){
+            modelAndView.addObject("error", "Transfer Fail");
+            return modelAndView;
+
+        }
     }
+
+//    @GetMapping("/transfer-history")
+//    public ModelAndView showHistory(){
+//        List<TransferDTO> list = transferRepository.listHistory();
+//        return  new ModelAndView("/transfers/list","transfers",list);
+//
+//    }
 
 
 }

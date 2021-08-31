@@ -27,7 +27,7 @@
     <a th:href="@{/customers}">Customer list</a>
 </p>
 
-<form class="form-group needs-validation" th:action="@{/edit}" th:object="${customer}" method="post">
+<form class="form-group needs-validation" th:object="${customer}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
     <div class="row">
         <div class="col-6">

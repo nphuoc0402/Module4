@@ -1,6 +1,7 @@
 package com.codegym.cms.service.transfer;
 
 import com.codegym.cms.model.Transfer;
+import com.codegym.cms.repository.ITransferDTORepository;
 import com.codegym.cms.repository.ITransferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 

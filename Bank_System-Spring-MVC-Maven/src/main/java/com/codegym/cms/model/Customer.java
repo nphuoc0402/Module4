@@ -1,27 +1,37 @@
 package com.codegym.cms.model;
 
+import com.codegym.cms.handler.CustomExceptionHandler;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.lang.NonNullFields;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+//Đặt tên
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class Customer  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "c_name")
-    @NotEmpty
-    @Size(min = 2, max = 30)
+    @NotEmpty(message="Name is required")
     private String name;
 
     @Column(name = "c_phone")
-    @NotEmpty
+    @NotEmpty(message="Phone is required")
     private String phone;
 
     @Column(name = "c_email")
-    @NotEmpty
+    @NotEmpty(message="Email is required")
     private String email;
 
     @Column(name = "c_salary")
@@ -30,7 +40,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(@NotEmpty Long id,  @Size(min = 2, max = 30)String name, String phone, String email, int salary) {
+    public Customer(Long id, String name, String phone, String email, int salary) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -84,4 +94,20 @@ public class Customer {
     public void setSalary(int salary) {
         this.salary = salary;
     }
+
+//    @Override
+//    public boolean supports(Class<?> aClass) {
+//        return false;
+//    }
+//
+//    @Override
+//    public void validate(Object o, Errors errors) {
+//        Customer customer = (Customer) o;
+//        String name = customer.getName();
+//        if(name == "" || "".equalsIgnoreCase(name)){
+//            errors.rejectValue("name","error.name.blank","Name is not empty");
+//        }
+//        String phone = customer.getPhone();
+//
+//    }
 }

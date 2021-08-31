@@ -10,4 +10,7 @@ public interface ICustomerService extends IGeneralService<Customer> {
     public void deposit(int salary,Long id);
     public void withdraw(int salary,Long id);
     public void transfer(int salary, int fee, Long id);
+    void increment(int salary, Long id);
+    void decrease(int salary, Long id);
+
 }
