@@ -5,15 +5,17 @@
     <title>Create customer</title>
     <meta charset="UTF-8">
     <style>
-        .message{
-            color:white;
+        .message {
+            color: white;
         }
-        .error{
+
+        .error {
             color: red;
             font-family: Arial;
             font-weight: bold;
         }
-        .success{
+
+        .success {
             color: lightgreen;
             font-weight: bold;
             font-family: Arial;
@@ -26,7 +28,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
     <style>
-        label.error{
+        label.error {
             color: red;
         }
     </style>
@@ -46,47 +48,58 @@
     </p>
 </center>
 <div align="center" class="container">
-    <form class="needs-validation row"  th:object="${transfer}" method="post">
-<!--        <input  type="hidden" class="form-control"  name="idSender"   th:value="${customer.getId()}" >-->
+    <form class="needs-validation row" th:object="${transfer}" method="post">
+        <!--        <input  type="hidden" class="form-control"  name="idSender"   th:value="${customer.getId()}" >-->
         <div class="form-row">
             <div class="col-md-4 mb-3">
                 <label for="validationCustom01">ID Sender</label>
-                <input  type="hidden" class="form-control"  name="idS"  id="validationCustom01" th:field="${transfer.idSender}" >
-                <input disabled type="text" class="form-control" th:value="${customer.getId()}"  name="idSd" id="validationCustom02">
+                <input type="hidden" class="form-control" name="idS" id="validationCustom01"
+                       th:field="${transfer.idSender}">
+                <input disabled type="text" class="form-control" th:value="${customer.getId()}" name="idSd"
+                       id="validationCustom02">
             </div>
             <div class="col-md-4 mb-3">
-                <label >Customer Name</label>
-                <input  type="text" name="name" size="45" th:value="${customer.getName()}" class="form-control" disabled>
+                <label>Customer Name</label>
+                <input type="text" name="name" size="45" th:value="${customer.getName()}" class="form-control" disabled>
             </div>
             <div class="col-md-4 mb-3">
-                <label >Balance</label>
-                <input  type="text" name="balance" class="form-control" th:value="${customer.getSalary()}" disabled>
+                <label>Balance</label>
+                <input type="text" name="balance" class="form-control" th:value="${customer.getSalary()}" disabled>
 
             </div>
         </div>
         <div class="form-row">
-
             <div class="col-md-3 mb-3">
-                <label >ID Receiver</label>
-                <input type="text" name="idR" class="form-control" th:field="*{idReceiver}" required >
-                <div class="invalid-feedback">
-                    Id Customer is required
-                </div>
+                <label>Name Receiver</label>
+                <select th:field="*{idReceiver}" id="" class="form-control">
+                    <th:block th:each="cus : ${customers}">
+
+
+                        <option th:value="${cus.id}" th:text="${cus.id + ' ' + cus.name}"></option>
+
+
+                    </th:block>
+                </select>
             </div>
             <div class="col-md-3 mb-3">
                 <label>Amount</label>
-                <input onchange="myFunction()" type="text" name="amount" th:field="*{amount}" id="amount" size="15" class="form-control" required/>
+                <input onchange="myFunction()" type="text" name="amount" th:field="*{amount}" id="amount" size="15"
+                       class="form-control" required/>
             </div>
             <div class="col-md-3 mb-3">
-                <label >Fee Percent</label>
-                <input  type="hidden" id="feepercent" value="${transfer.transaction_fee}" name="feepercent" th:field="*{transaction_fee}" class="form-control"  >
-                <input disabled type="text" id="feepercent1" name="feepercent1" th:value="${transfer.transaction_fee}" class="form-control" >
+                <label>Fee Percent</label>
+                <input type="hidden" id="feepercent" value="${transfer.transaction_fee}" name="feepercent"
+                       th:field="*{transaction_fee}" class="form-control">
+                <input disabled type="text" id="feepercent1" name="feepercent1" th:value="${transfer.transaction_fee}"
+                       class="form-control">
 
             </div>
             <div class="col-md-3 mb-3">
-                <label >Fee Transaction</label>
-                <input  id="Input"  type="hidden" name="feetransaction" value="" th:field="*{total_amount}" class="form-control" >
-                <input disabled type="text"  name="feepercent1" th:value="${transfer.getTotal_amount()}" class="form-control" >
+                <label>Fee Transaction</label>
+                <input id="Input" type="hidden" name="feetransaction" value="" th:field="*{total_amount}"
+                       class="form-control">
+                <input disabled type="text" name="feepercent1" th:value="${transfer.getTotal_amount()}"
+                       class="form-control">
 
             </div>
         </div>
@@ -95,42 +108,43 @@
         </div>
     </form>
 </div>
-<div class="message">
-    <th:block th:if="${success}">
-        <div class="alert alert-success" role="alert" style="position: fixed; bottom: 0; right: 0; left: 0">
-            <Strong th:text="${success}"></Strong>
-        </div>
-    </th:block>
-    <th:block th:if="${error}">
-        <div class="alert alert-danger" role="alert" style="position: fixed; bottom: 0; right: 0; left: 0">
-            <Strong th:text="${error}"></Strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" th:height="30px">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </th:block>
-</div>
+<!--<div class="message">-->
+<!--    <th:block th:if="${success}">-->
+<!--        <div class="alert alert-success" role="alert" style="position: fixed; bottom: 0; right: 0; left: 0">-->
+<!--            <Strong th:text="${success}"></Strong>-->
+<!--        </div>-->
+<!--    </th:block>-->
+<!--    <th:block th:if="${error}">-->
+<!--        <div class="alert alert-danger" role="alert" style="position: fixed; bottom: 0; right: 0; left: 0">-->
+<!--            <Strong th:text="${error}"></Strong>-->
+<!--            <button type="button" class="close" data-dismiss="alert" aria-label="Close" th:height="30px">-->
+<!--                <span aria-hidden="true">&times;</span>-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </th:block>-->
+<!--</div>-->
 <script>
     function myFunction() {
         var x = document.getElementById("amount").value;
         var y = document.getElementById("feepercent").value;
-        document.getElementById("Input").value = (x * y)/100;
+        document.getElementById("Input").value = (x * y) / 100;
     }
+
     $(".alert-success").fadeOut(4000);
     $(".alert-danger").fadeIn();
-    $(".close").click(function(){
+    $(".close").click(function () {
         $(".alert-danger").fadeOut();
     })
 </script>
 <script>
-    $(function() {
+    $(function () {
         $(".needs-validation").validate({
             rules: {
                 onfocusout: false,
                 onkeyup: false,
                 onclick: false,
                 idS: {
-                    required : true
+                    required: true
                 },
                 idR: {
                     required: true
@@ -145,7 +159,7 @@
                     required: "Please enter your name",
                     number: "ID Sender is required"
                 },
-                idR:{
+                idR: {
                     required: "Please provide a phone",
                     number: "ID Receiver is required"
                 },
@@ -156,7 +170,7 @@
                 },
 
             },
-            submitHandler: function(form) {
+            submitHandler: function (form) {
                 form.submit();
             }
         });

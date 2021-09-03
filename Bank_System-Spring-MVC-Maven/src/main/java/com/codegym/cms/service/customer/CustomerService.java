@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -31,12 +32,12 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void increment(int salary, Long id) {
+    public void increment(BigDecimal salary, Long id) {
         customerRepository.increment(salary,id);
     }
 
     @Override
-    public void decrease(int salary, Long id) {
+    public void decrease(BigDecimal salary, Long id) {
         customerRepository.decrease(salary,id);
     }
 
@@ -51,17 +52,22 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void deposit(int salary, Long id) {
+    public void deposit(BigDecimal salary, Long id) {
         customerRepository.deposit(salary,id);
     }
 
     @Override
-    public void withdraw(int salary, Long id) {
+    public void withdraw(BigDecimal salary, Long id) {
         customerRepository.withdraw(salary,id);
     }
 
     @Override
-    public void transfer(int salary, int fee, Long id) {
+    public void transfer(BigDecimal salary, int fee, Long id) {
         customerRepository.transfer(salary,fee,id);
+    }
+
+    @Override
+    public Iterable<Customer> findAllWithoutSenderById(Long id) {
+        return customerRepository.findAllWithoutSenderById(id);
     }
 }

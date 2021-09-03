@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -142,6 +143,7 @@ public class CustomerController {
             ModelAndView modelAndView = new ModelAndView("/transfers/transfer");
             modelAndView.addObject("customer", customer.get());
             modelAndView.addObject("transfer",new Transfer());
+            modelAndView.addObject("customers",customerService.findAllWithoutSenderById(id));
             modelAndView.addObject("idSender",id);
             return modelAndView;
         } else {
@@ -153,21 +155,25 @@ public class CustomerController {
     @PostMapping("/transfer-customer/{id}")
     public ModelAndView transfer(@ModelAttribute("transfer") Transfer transfer,@PathVariable (name = "id") Long id){
         transfer.setIdSender(id);
-        ModelAndView modelAndView = new ModelAndView("/transfers/transfer");
         try{
-            int fee_transaction = transfer.getAmount() + (transfer.getAmount() * transfer.getTransaction_fee() /100);
+            ModelAndView modelAndView = new ModelAndView("/transfers/transfer");
+            BigDecimal fee_transaction = transfer.getAmount().add ((transfer.getAmount().multiply(transfer.getTransaction_fee())).divide(BigDecimal.valueOf(10)));
             transferRepository.save(transfer);
             customerService.increment(transfer.getAmount(),transfer.getIdReceiver());
             customerService.decrease(fee_transaction,id);
-            TransferDTO transferDTO = new TransferDTO(id,customerService.findById(id).get().getName(),
-                    transfer.getIdReceiver(),customerService.findById(transfer.getIdReceiver()).get().getName(),
-                    transfer.getAmount(),transfer.getTransaction_fee(),transfer.getTotal_amount());
-            modelAndView.addObject("transfer",transferDTO);
+            Optional<Customer> customer = customerService.findById(id);
+            modelAndView.addObject("customer", customer.get());
+            modelAndView.addObject("transfer",new Transfer());
+            modelAndView.addObject("customers",customerService.findAllWithoutSenderById(id));
+            modelAndView.addObject("idSender",id);
+//            TransferDTO transferDTO = new TransferDTO(id,customerService.findById(id).get().getName(),
+//                    transfer.getIdReceiver(),customerService.findById(transfer.getIdReceiver()).get().getName(),
+//                    transfer.getAmount(),transfer.getTransaction_fee(),transfer.getTotal_amount());
+//            modelAndView.addObject("transfer",transferDTO);
         modelAndView.addObject("success", "New customer created successfully");
             return modelAndView;
         }catch (IllegalStateException e){
-            modelAndView.addObject("error", "Transfer Fail");
-            return modelAndView;
+            return  new ModelAndView("error.404");
 
         }
     }

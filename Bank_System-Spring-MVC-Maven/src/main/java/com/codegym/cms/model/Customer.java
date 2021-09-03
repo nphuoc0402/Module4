@@ -13,6 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 
 //Đặt tên
 @Entity
@@ -35,12 +36,12 @@ public class Customer  {
     private String email;
 
     @Column(name = "c_salary")
-    private int salary = 0;
+    private BigDecimal salary = BigDecimal.valueOf(0);
 
     public Customer() {
     }
 
-    public Customer(Long id, String name, String phone, String email, int salary) {
+    public Customer(Long id, String name, String phone, String email, BigDecimal salary) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -48,7 +49,7 @@ public class Customer  {
         this.salary = salary;
     }
 
-    public Customer(@Size(min = 2, max = 30)String name, String phone, String email, int salary) {
+    public Customer(@Size(min = 2, max = 30)String name, String phone, String email, BigDecimal salary) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -87,11 +88,11 @@ public class Customer  {
         this.email = email;
     }
 
-    public int getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 
