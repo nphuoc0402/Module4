@@ -87,11 +87,11 @@
     let template = jQuery.validator.format($.trim($("#template").val()));
 
     let addRow = () => {
-        $("#orderItems tbody").prepend($(template(customer.id, customer.fullName, customer.email, customer.phone, customer.province_id)));
+        $("#orderItems tbody").prepend($(template(customer.id, customer.fullName, customer.email, customer.phone, customer.province_name)));
     }
 
     let getProvinces = () => {
-       return $.ajax({
+        return $.ajax({
             type: "GET",
             header: {
                 "Accept": "application/json",
@@ -99,7 +99,6 @@
             },
             url: page.urls.getProvinces,
         }).done((data) => {
-
             $('#frmCreateCustomer').find('#province').empty();
             $.each(data.results,(index,item) => {
                 $("#frmCreateCustomer").find("#province").append(`<option value="${item.province_id}">${item.province_name}</option>`)
@@ -111,7 +110,7 @@
     }
 
     function getDistrict(province_id){
-       return $.ajax({
+        return $.ajax({
             type: "GET",
             header: {
                 "Accept": "application/json",
@@ -123,10 +122,10 @@
             $.each(data.results,(index,itemd) => {
                 $("#frmCreateCustomer").find("#province_d").append(`<option value="${itemd.district_id}">${itemd.district_name}</option>`)
             })
-                }).fail(function() {
-                    App.showErrorAlert("An error occurred. Please try again later !");
-                });
-            }
+        }).fail(function() {
+            App.showErrorAlert("An error occurred. Please try again later !");
+        });
+    }
 
     function getWard(district_id){
         $.ajax({
@@ -138,26 +137,26 @@
             url: page.urls.getAllWard + district_id,
         }).done((data) => {
             $('#frmCreateCustomer').find('#province_w').empty();
-            $.each(data.results,(index,itemw) => {
-                $("#frmCreateCustomer").find("#province_w").append(`<option value="${itemw.ward_name}">${itemw.ward_name}</option>`)
+            $.each(data.results,(index,item) => {
+                $("#frmCreateCustomer").find("#province_w").append(`<option value="${item.ward_id}">${item.ward_name}</option>`)
             })
-    }).fail(function() {
-        App.showErrorAlert("An error occurred. Please try again later !");
-    });
+        }).fail(function() {
+            App.showErrorAlert("An error occurred. Please try again later !");
+        });
     }
 
-
-
     function getCustomers() {
+        console.log('getCustomers');
+        console.log(page.urls.getAllCustomers);
         $.ajax({
-            type: "GET",
-            url: page.urls.getAllCustomers,
+            type : "GET",
+            url : page.urls.getAllCustomers,
         }).done((data) => {
-            $.each(data, (i, item) => {
+            $.each(data,(i,item) => {
                 customer = item;
                 addRow();
             });
-        }).fail(function() {
+        }).fail(function () {
             App.showErrorAlert("An error occurred. Please try again later !");
         });
     }
@@ -166,7 +165,7 @@
         customer.fullName = $("#fullName").val();
         customer.email = $("#email").val();
         customer.phone = $("#phone").val();
-        customer.province_id =  $("#province option:selected").text();
+        customer.province_name =  $("#province option:selected").text();
         delete customer.id;
         // console.log(customer)
 
@@ -197,7 +196,31 @@
             url: page.urls.getCustomer + customer.id,
             // data: { id: customer.id },
         }).done((resp) => {
-            assignUpdateModal(resp);
+            $.ajax({
+                type: "GET",
+                header: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                url: page.urls.getProvinces,
+            }).done((data) => {
+                $('#frmUpdateCustomer').find('#upProvince').empty();
+                $.each(data.results,(index,item) => {
+                    $("#frmUpdateCustomer").find("#upProvince").append(`<option value="${item.province_id}">${item.province_name}</option>`)
+                    if(resp.province_name === item.province_name){
+                        $('#upProvince').val(item.province_id);
+                    }
+                })
+
+                $("#upFullName").val(resp.fullName);
+                $("#upEmail").val(resp.email);
+                $("#upPhone").val(resp.phone);
+
+                $('#updateModal').modal('toggle');
+            }).fail(function() {
+                App.showErrorAlert("An error occurred. Please try again later !");
+            });
+
         }).fail(function() {
             App.showErrorAlert("An error occurred. Please try again later !");
         });
@@ -207,7 +230,7 @@
         $("#upFullName").val(c.fullName);
         $("#upEmail").val(c.email);
         $("#upPhone").val(c.phone);
-        $('#upProvince').val(c.province);
+        $('#upProvince option:selected').text(c.province_name);
         $('#updateModal').modal('toggle');
     }
 
@@ -215,7 +238,7 @@
         customer.fullName = $("#upFullName").val();
         customer.email = $("#upEmail").val();
         customer.phone = $("#upPhone").val();
-        customer.province = { "id": $("#upProvince").val() };
+        customer.province_name = $("#upProvince option:selected").text();
 
         $.ajax({
             type: "POST",
@@ -228,7 +251,7 @@
         }).done( (resp) => {
             customer = resp;
             let row = $("#orderItems tbody").find('#' + $("#currentRow").val());
-            let updated_row = $(template(customer.id, customer.fullName, customer.email, customer.phone, customer.province));
+            let updated_row = $(template(customer.id, customer.fullName, customer.email, customer.phone, customer.province_name));
             row.replaceWith (updated_row);
             $("#currentRow").val("");
             $('#frmUpdateCustomer')[0].reset();
@@ -296,22 +319,20 @@
     });
 
     $("#province").on('change',function () {
-            getDistrict($("#province").val()).then(function () {
-                getWard($("#province_d").val());
-            });
+        getDistrict($("#province").val()).then(function () {
+            getWard($("#province_d").val());
+        });
     })
 
     $("#province_d").on('change',function () {
-            getWard($("#province_d").val());
+        getWard($("#province_d").val());
     })
 
     function getInt(){
-       getProvinces().then(function () {
+        getProvinces().then(function () {
             let province_id = $("#province").prop("selectedIndex",0).val();
-            console.log(province_id);
             getDistrict(province_id).then(function () {
                 let district_id = $("#province_d").prop("selectedIndex",0).val();
-                console.log(district_id);
                 getWard(district_id);
             })
         })

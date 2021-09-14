@@ -1,0 +1,23 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="frm-create">
+    <form id="frmCreateCustomer">
+        <fieldset class="row g-3">
+            <legend>Customer information</legend>
+            <div class="col-md-6">
+                <label for="producer" class="form-label">Producer</label>
+                <input type="text" class="form-control" id="producer" name="fullName">
+            </div>
+            <div class="col-md-6">
+                <label for="model" class="form-label">Model</label>
+                <input type="text" class="form-control" id="model" name="email">
+            </div>
+            <div class="col-md-6">
+                <label for="price" class="form-label">Price</label>
+                <input type="text" class="form-control" id="price" name="phone">
+            </div>
+            <div class="col-md-12">
+                <input type="button" id="btnCreateSmartPhone" class="btn btn-outline-primary" value="Create SmartPhone">
+            </div>
+        </fieldset>
+    </form>
+</th:block>

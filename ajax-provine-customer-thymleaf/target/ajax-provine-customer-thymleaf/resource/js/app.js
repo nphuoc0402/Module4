@@ -37,11 +37,11 @@ class App {
 }
 
 class Customer {
-    constructor(id, fullName, email, phone, province_id) {
+    constructor(id, fullName, email, phone, province_name) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
-        this.province_id = province_id;
+        this.province_name = province_name;
     }
 }

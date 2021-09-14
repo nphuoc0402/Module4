@@ -19,7 +19,7 @@ public class Customer {
     private String fullName;
     private String email;
     private String phone;
-    private String province_id;
+    private String province_name;
 
 //    @ManyToOne
 //    @JoinColumn(name = "province_id")
@@ -31,11 +31,11 @@ public class Customer {
         this.phone = phone;
     }
 
-    public Customer(String email, String fullName, String phone, String province_id) {
+    public Customer(String email, String fullName, String phone, String province_name) {
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
-        this.province_id = province_id;
+        this.province_name = province_name;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Customer {
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", province=" + province_id +
+                ", province=" + province_name +
                 '}';
     }
 }

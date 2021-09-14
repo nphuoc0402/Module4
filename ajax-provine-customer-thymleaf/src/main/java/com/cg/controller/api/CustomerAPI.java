@@ -22,9 +22,6 @@ public class CustomerAPI {
     @Autowired
     private ICustomerService customerService;
 
-//    @Autowired
-//    private IProvinceService provinceService;
-
     @GetMapping
     public ResponseEntity<Iterable<Customer>> allCustomers() {
         Iterable<Customer> customers = customerService.findAll();

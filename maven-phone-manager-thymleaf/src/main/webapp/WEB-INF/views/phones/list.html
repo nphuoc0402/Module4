@@ -1,126 +1,289 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>List Smartphone</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript">
-
-        function addNewSmartPhone() {
-            //lay du lieu
-            let producer = $('#producer').val();
-            let model = $('#model').val();
-            let price = $('#price').val();
-            let newSmartphone = {
-                producer: producer,
-                model: model,
-                price: price
-            };
-            // goi ajax
-            $.ajax({
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                type: "POST",
-                data: JSON.stringify(newSmartphone),
-                //tên API
-                url: "/smartphones",
-                //xử lý khi thành công
-                success: successHandler
-
-            });
-            //chặn sự kiện mặc định của thẻ
-            event.preventDefault();
-        }
-
-        function successHandler() {
-            $.ajax({
-                type: "GET",
-                //tên API
-                url: "/smartphones",
-                //xử lý khi thành công
-                success: function (data) {
-                    // hien thi danh sach o day
-                    let content = '    <tr>\n' +
-                        '        <td>Producer</td>\n' +
-                        '        <td>Model</td>\n' +
-                        '        <td>Price</td>\n' +
-                        '        <td>Delete</td>\n' +
-                        '    </tr>';
-                    for (let i = 0; i < data.length; i++) {
-                        content += getSmartphone(data[i]);
-                    }
-                    document.getElementById('smartphoneList').innerHTML = content;
-                }
-            });
-        }
-
-        function getSmartphone(smartphone) {
-            return `<tr><td >${smartphone.producer}</td><td >${smartphone.model}</td><td >${smartphone.price}</td>` +
-                `<td><a class="deleteSmartphone" href="${smartphone.id}">Delete</a></td></tr>`;
-        }
-
-        $(document).ready(function () {
-            //sư kiện nào thực hiện Ajax
-            $('.deleteSmartphone').click(function (event) {
-                //lay du lieu
-                let a = $(this);
-                let smartphoneId = a.attr("href");
-                // goi ajax
-                $.ajax({
-                    type: "DELETE",
-                    //tên API
-                    url: `/smartphones/${smartphoneId}`,
-                    //xử lý khi thành công
-                    success: function (data) {
-                        a.parent().parent().remove();
-                    }
-
-                });
-                //chặn sự kiện mặc định của thẻ
-                event.preventDefault();
-            });
-        })
-    </script>
+    <title>Customer management</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/resource/css/bootstrap.css">
+    <link rel="stylesheet" href="/resource/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/resource/css/sweetalert2.min.css">
+    <script type="text/javascript" src="/resource/js/sweetalert2.min.js"></script>
+    <script type="text/javascript" src="/resource/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/resource/js/jquery.validate-1.19.3.min.js"></script>
+    <script type="text/javascript" src="/resource/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="/resource/js/app.js"></script>
+    <link rel="stylesheet" href="/resource/css/style.css">
 </head>
 <body>
-<form id="add-smartphone">
-    <table>
-        <tr>
-            <td>Producer:</td>
-            <td><input type="text" id="producer" placeholder="producer"></td>
-        </tr>
-        <tr>
-            <td>Model:</td>
-            <td><input type="text" id="model" placeholder="model"></td>
-        </tr>
-        <tr>
-            <td>Price:</td>
-            <td><input type="text" id="price" placeholder="price"></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="Add" onclick="addNewSmartPhone()"></td>
-        </tr>
-    </table>
-</form>
-<h1>Smartphone List</h1>
-<table id="smartphoneList">
-    <tr>
-        <td>Producer</td>
-        <td>Model</td>
-        <td>Price</td>
-        <td>Delete</td>
-    </tr>
-<!--    <th:block th:each="smartphone: ${smartphones}">-->
-<!--        <tr>-->
-<!--            <td th:text="${smartphone.producer}"></td>-->
-<!--            <td th:text="${smartphone.model}"></td>-->
-<!--            <td th:text="${smartphone.producer}"></td>-->
-<!--            <td><a class="deleteSmartphone" th:href="${smartphone.getId()}">Delete</a></td>-->
-<!--        </tr>-->
-<!--    </th:block>-->
-</table>
+<div class="container">
+    <div class="success-alert">
+
+    </div>
+<!--    <div class="box-header">-->
+<!--        <th:block th:replace="/customer/createForm :: frm-create"></th:block>-->
+<!--    </div>-->
+    <form id="frmCreateSmartPhone">
+        <fieldset class="row g-3">
+            <legend>Customer information</legend>
+            <div class="col-md-6">
+                <label for="producer" class="form-label">Producer</label>
+                <input type="text" class="form-control" id="producer" name="fullName">
+            </div>
+            <div class="col-md-6">
+                <label for="model" class="form-label">Model</label>
+                <input type="text" class="form-control" id="model" name="email">
+            </div>
+            <div class="col-md-6">
+                <label for="price" class="form-label">Price</label>
+                <input type="text" class="form-control" id="price" name="phone">
+            </div>
+            <div class="col-md-12">
+                <input type="button" id="btnCreateSmartPhone" class="btn btn-outline-primary" value="Create SmartPhone">
+            </div>
+        </fieldset>
+    </form>
+    <div class="box-body">
+            <textarea style="display:none" id="template">
+                <tr id="tr_{0}">
+                    <td>{0}</td>
+                    <td><a href="/customer?action=view&id={0}">{1}</a></td>
+                    <td>{2}</td>
+                    <td>{3}</td>
+                    <td>{4}</td>
+                    <td>
+                        <a class="edit" data-id="{0}">
+                            <i class="fa fa-pencil-square-o fa-fw edit"></i>
+                            edit
+                        </a>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-danger delete" data-id="{0}">
+                            <i class="fa fa-trash-o"></i>
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </textarea>
+        <input type="hidden" id="currentRow"/>
+        <table id="orderItems" class="table table-hover" border="1">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Producer</th>
+                <th>Model</th>
+                <th>Price</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="updateModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Customer information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmUpdateSmartPhone">
+                    <fieldset class="row g-3">
+                        <div class="col-md-6">
+                            <label for="upProducer" class="form-label">Full name</label>
+                            <input type="text" class="form-control" id="upProducer" name="upFullName">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="upModel" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="upModel" name="upEmail">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="upPrice" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="upPrice" name="upPhone">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="btnUpdateSmartPhone" class="btn btn-outline-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<th:block th:replace="/customer/updateForm :: frm-update"></th:block>-->
+
+<script type="text/javascript" src="/resource/js/custom-validation.js"></script>
+
+<script>
+    let page = {
+        urls: {
+            getAllSmarthPhone: App.BASE_URL_SMARTPHONES,
+            getSmarthPhone: App.BASE_URL_SMARTPHONES + '/view/',
+            saveNew: App.BASE_URL_SMARTPHONES,
+            saveEdit: App.BASE_URL_SMARTPHONES,
+            deleteSmarthPhone: App.BASE_URL_SMARTPHONES
+        }
+    }
+
+    var smartphone = new Smartphone();
+    let template = jQuery.validator.format($.trim($("#template").val()));
+
+    let addRow = () => {
+        $("#orderItems tbody").prepend($(template(smartphone.id, smartphone.producer, smartphone.model, smartphone.price)));
+    }
+
+
+    function getCustomers() {
+        $.ajax({
+            type: "GET",
+            url: page.urls.getAllSmarthPhone,
+        }).done((data) => {
+            $.each(data, (i, item) => {
+                smartphone = item;
+                addRow();
+            });
+        }).fail(function() {
+            App.showErrorAlert("An error occurred. Please try again later !");
+        });
+    }
+
+    function createCustomer() {
+        smartphone.producer = $("#producer").val();
+        smartphone.model = $("#model").val();
+        smartphone.price = $("#price").val();
+        delete smartphone.id;
+
+        $.ajax({
+            type: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: page.urls.saveNew,
+            data: JSON.stringify(smartphone)
+        }).done((resp) => {
+            smartphone = resp;
+            addRow();
+            App.showSuccessAlert("Successful data generation !");
+        }).fail(function() {
+            App.showErrorAlert("An error occurred. Please try again later !");
+        });
+
+        $('#frmCreateSmartPhone')[0].reset();
+        $("#frmCreateSmartPhone").validate().resetForm();
+    }
+
+    function showUpdateModal() {
+        $.ajax({
+            type: "GET",
+            url: page.urls.getCustomer + customer.id,
+            // data: { id: customer.id },
+        }).done((resp) => {
+            assignUpdateModal(resp);
+        }).fail(function() {
+            App.showErrorAlert("An error occurred. Please try again later !");
+        });
+    }
+
+    function assignUpdateModal(c) {
+        $("#upProducer").val(c.producer);
+        $("#upModel").val(c.model);
+        $("#upPrice").val(c.price);
+        $('#updateModal').modal('toggle');
+    }
+
+    function updateCustomer() {
+        smartphone.producer = $("#upProducer").val();
+        smartphone.model = $("#upModel").val();
+        smartphone.price = $("#upPrice").val();
+
+        $.ajax({
+            type: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: page.urls.saveEdit,
+            data: JSON.stringify(smartphone)
+        }).done( (resp) => {
+            smartphone = resp;
+            let row = $("#orderItems tbody").find('#' + $("#currentRow").val());
+            let updated_row = $(template(smartphone.id, smartphone.producer, smartphone.model, smartphone.price));
+            row.replaceWith (updated_row);
+            $("#currentRow").val("");
+            $('#frmUpdateSmartPhone')[0].reset();
+            $("#frmUpdateSmartPhone").validate().resetForm();
+
+            App.showSuccessAlert("Data update successful !");
+        }).fail( () => {
+            App.showErrorAlert("An error occurred. Please try again later !");
+        });
+
+        $("#updateModal").modal('hide');
+    }
+
+    function deleteConfirm() {
+        App.showDeleteConfirmDialog()
+            .then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "DELETE",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        // url: page.urls.deleteCustomer + "/" + customer.id,
+                        url: page.urls.deleteCustomer,
+                        data : JSON.stringify({
+                            id : smartphone.id,
+                        }) ,
+                        success() {
+                            App.showSuccessAlert("Delete data successfully!");
+                            $("#tr_" + smartphone.id).remove();
+                        },
+                        error() {
+                            App.showErrorAlert("An error occurred. Please try again later!");
+                        }
+                    });
+                }
+            });
+    }
+
+    $("#btnCreateSmartPhone").on("click", () => {
+        $("#frmCreateSmartPhone").submit();
+        // createCustomer();
+    });
+
+    $("#btnUpdateSmartPhone").on("click", () => {
+        alert("hello");
+        $("#frmUpdateSmartPhone").submit();
+        // updateCustomer();
+    });
+
+    $("#orderItems").on("click", ".edit", function () {
+        customer.id = $(this).data('id');
+        $("#currentRow").val($(this).closest("tr").attr("id"));
+        showUpdateModal();
+    });
+
+    $("#orderItems").on("click", ".delete", function () {
+        smartphone.id = $(this).data('id');
+        deleteConfirm();
+    });
+
+    $('#updateModal').on('hidden.bs.modal', function () {
+        $('#frmUpdateSmartPhone')[0].reset();
+        $('#frmUpdateSmartPhone').validate().resetForm();
+    });
+
+    $(() => {
+        getCustomers();
+        // getProvinces();
+    });
+
+</script>
 </body>
 </html>

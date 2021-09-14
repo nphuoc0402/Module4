@@ -7,13 +7,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbcd44ce-4585-4bc3-ade9-dfeb259e01a6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Caculator/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Caculator/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerManage/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerManage/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../First_Project_Spring_MVC/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../First_Project_Spring_MVC/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Sandwich_Condiments/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Sandwich_Condiments/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../customer-management-thymleaf/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../customer-management-thymleaf/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../customer-management-thymleaf/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../customer-management-thymleaf/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../demo2/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../demo2/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerManage/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerManage/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Customer_Manager_ORM/customer-management" beforeDir="false" afterPath="$PROJECT_DIR$/../Customer_Manager_ORM/customer-management" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Customer_Manager_Repository/spring-customer-management" beforeDir="false" afterPath="$PROJECT_DIR$/../Customer_Manager_Repository/spring-customer-management" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring-customer-manager-JPA/spring-customer-management" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring-customer-manager-JPA/spring-customer-management" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring-validate-info-user/spring-validate-infor-user" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring-validate-info-user/spring-validate-infor-user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-aspect/customer-management" beforeDir="false" afterPath="$PROJECT_DIR$/../customer-management-aspect/customer-management" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-gradle/.gradle/6.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../customer-management-gradle/.gradle/6.1.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-gradle/.gradle/6.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../customer-management-gradle/.gradle/6.1.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-gradle/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../customer-management-gradle/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-thymleaf/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-thymleaf/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-thymleaf/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-thymleaf/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-thymleaf/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-thymleaf/customer-management-thymleaf.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-thymleaf/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-thymleaf/src/main/webapp/WEB-INF/applicationContext.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-thymleaf/src/main/webapp/WEB-INF/log4j.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../customer-management-thymleaf/src/main/webapp/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../product-manager-thymleaf-maven/target/CustomerManagement.war" beforeDir="false" afterPath="$PROJECT_DIR$/../product-manager-thymleaf-maven/target/CustomerManagement.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-customer-management-JPA-repository/spring-customer-management" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-customer-management-JPA-repository/spring-customer-management" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-phone-manager/spring-phone-management" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-phone-manager/spring-phone-management" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-user-model/.gradle/6.1.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-user-model/.gradle/6.1.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-user-model/.gradle/6.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-user-model/.gradle/6.1.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-user-model/.gradle/6.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-user-model/.gradle/6.1.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-user-model/.gradle/6.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-user-model/.gradle/6.1.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-user-model/.gradle/6.1.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-user-model/.gradle/6.1.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-user-model/.gradle/6.1.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-user-model/.gradle/6.1.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-user-model/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-user-model/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-user-model/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-user-model/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-user-model/build/libs/spring-user-model-1.0-SNAPSHOT.war" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-user-model/build/libs/spring-user-model-1.0-SNAPSHOT.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-user-model/src/main/java/com/codegym/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-user-model/src/main/java/com/codegym/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-user-model/src/main/webapp/WEB-INF/views/home.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-user-model/src/main/webapp/WEB-INF/views/home.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,6 +156,7 @@
       <workItem from="1629628264218" duration="459000" />
       <workItem from="1629632907727" duration="310000" />
       <workItem from="1629633289527" duration="57000" />
+      <workItem from="1630679447513" duration="39000" />
     </task>
     <servers />
   </component>
@@ -141,11 +168,11 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1629628526311" />
-    <state x="521" y="132" key="FileChooserDialogImpl" timestamp="1629633344346">
+    <state x="521" y="132" key="FileChooserDialogImpl" timestamp="1630679484918">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1629628638790" />
-    <state x="521" y="132" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1629633344346" />
+    <state x="521" y="132" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1630679484918" />
     <state width="905" height="179" key="GridCell.Tab.0.bottom" timestamp="1629628728995">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
